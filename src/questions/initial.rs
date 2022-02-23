@@ -1,7 +1,7 @@
 use inquire::Text;
 use std::collections::HashMap;
 
-pub fn get_initial_config() -> HashMap<&'static str, String> {
+pub fn get_initial() -> HashMap<&'static str, String> {
     let mut config = HashMap::new();
 
     let input_path = Text::new("Path")

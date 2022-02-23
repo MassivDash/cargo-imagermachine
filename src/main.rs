@@ -21,7 +21,7 @@ Y8P                                                                         888 
                           Y88P     
 ");
 
-    let mut init_questions_config: HashMap<&str, String> = questions::get_initial_config();
+    let mut init_questions_config: HashMap<&str, String> = questions::initial::get_initial();
 
     let dir_files = get_files_info(init_questions_config.get("input_path").unwrap());
 
