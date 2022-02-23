@@ -1,6 +1,8 @@
 use inquire::{Select, Text};
 use std::collections::HashMap;
 
+use crate::files::{display_table, get_files_info};
+
 mod files;
 
 fn main() {
@@ -50,11 +52,13 @@ Y8P                                                                         888 
         },
     };
 
-    let dir_files = files::get_files_info(config.get("input_path").unwrap());
+    let dir_files = get_files_info(config.get("input_path").unwrap());
 
-    for file in dir_files {
+    for file in &dir_files {
         println!("{:?}", file);
     }
+
+    display_table(&dir_files);
 
     let options = vec![
         "default optimization",

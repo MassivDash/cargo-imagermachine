@@ -1,3 +1,5 @@
+use prettytable::{cell, row, Table};
+
 use size_format::SizeFormatterBinary;
 use std::{
     collections::HashSet,
@@ -24,4 +26,15 @@ pub fn get_files_info(input_path: &str) -> HashSet<(String, String, String)> {
     }
 
     return files;
+}
+
+pub fn display_table(files: &HashSet<(String, String, String)>) {
+    let mut table = Table::new();
+    table.add_row(row!["Path", "Name", "Size"]);
+
+    for file in files {
+        table.add_row(row![file.0, file.1, file.2]);
+    }
+
+    table.printstd();
 }
