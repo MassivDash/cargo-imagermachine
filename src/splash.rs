@@ -2,7 +2,7 @@ use termion::color;
 
 pub fn do_splash() {
     spacer();
-    println!("{}", color::Fg(color::Blue));
+    println!("{}", color::Fg(color::Magenta));
     println!(
         "{}
        MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
