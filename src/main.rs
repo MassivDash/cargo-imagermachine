@@ -23,6 +23,15 @@ Y8P                                                                         888 
     let mut init_questions_config: HashMap<&str, String> = questions::get_initial_config();
 
     let dir_files = get_files_info(init_questions_config.get("input_path").unwrap());
+
+    if dir_files.len() == 0 {
+        println!();
+        println!("Error: Rust is about to go into panic!");
+        println!("Error: No image files found in the directory");
+        println!();
+        panic!("No image files found in the directory");
+    }
+
     display_table(&dir_files);
 
     let options = vec![
