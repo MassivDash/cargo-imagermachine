@@ -1,25 +1,15 @@
 use std::collections::HashMap;
-
+extern crate termion;
 use crate::files::{display_table, get_files_info};
 use inquire::Select;
 mod errors;
 mod files;
 mod questions;
+mod splash;
 
 fn main() {
-    println!("
-d8b                                                                         888     d8b                 
-Y8P                                                                         888     Y8P                 
-                                                                            888                         
-88888888b.d88b.  8888b.  .d88b.  .d88b. 888d88888888b.d88b.  8888b.  .d8888b88888b. 88888888b.  .d88b.  
-888888  888  88b     88bd88P88bd8P  Y8b888P  888  888  88b     88bd88P   888   88b888888   88bd8P  Y8b 
-888888  888  888.d888888888  88888888888888    888  888  888.d888888888     888  888888888  88888888888 
-888888  888  888888  888Y88b 888Y8b.    888    888  888  888888  888Y88b.   888  888888888  888Y8b.     
-888888  888  888 Y888888  Y88888  Y8888 888    888  888  888 Y888888  Y8888P888  888888888  888  Y8888  
-                             888                                                                        
-                        Y8b d88P                                                                        
-                          Y88P     
-");
+    // BIG INTRO
+    splash::do_splash();
 
     let mut init_questions_config: HashMap<&str, String> = questions::initial::get_initial();
 
