@@ -8,3 +8,5 @@ edition = "2021"
 [dependencies]
 
 inquire = "0.2.1"
+prettytable-rs = "^0.8"
+size_format = "1.0.2"

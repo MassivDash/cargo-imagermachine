@@ -1,4 +1,8 @@
-use inquire::{error::InquireResult, Confirm, MultiSelect, Select, Text};
+use inquire::{Select, Text};
+use std::collections::HashMap;
+
+mod files;
+
 fn main() {
     println!("
 d8b                                                                         888     d8b                 
@@ -14,25 +18,39 @@ Y8P                                                                         888 
                           Y88P     
 ");
 
+    let mut config = HashMap::new();
+
     let input_path = Text::new("Path")
         .with_default(".")
         .with_help_message("Enter directory path (type . for current)")
         .prompt();
 
     match input_path {
-        Ok(path) => println!("Using path {}", path),
-        Err(_) => println!("An error happened when asking for your name, try again later."),
-    }
+        Ok(path) => config.insert("input_path", path),
+        Err(error) => match error {
+            _ => {
+                println!("Error: {}", error);
+                return;
+            }
+        },
+    };
 
     let output_path = Text::new("Output Path")
-        .with_default(".")
-        .with_help_message("Enter output directory path, default /out")
+        .with_default("./output")
+        .with_help_message("Enter output directory path, default /output")
         .prompt();
 
     match output_path {
-        Ok(path) => println!("Using path {}", path),
-        Err(_) => println!("An error happened when asking for your name, try again later."),
-    }
+        Ok(path) => config.insert("output_path", path),
+        Err(error) => match error {
+            _ => {
+                println!("Error: {}", error);
+                return;
+            }
+        },
+    };
+
+    files::get_files_info(config.get("input_path").unwrap());
 
     let options = vec![
         "default optimization",
@@ -41,10 +59,15 @@ Y8P                                                                         888 
         "add watermark",
     ];
 
-    let ans = Select::new("What's your favorite fruit?", options).prompt();
+    let ans = Select::new("What are we doing ?", options).prompt();
 
     match ans {
-        Ok(choice) => println!("{}! That's mine too!", choice),
-        Err(_) => println!("There was an error, please try again"),
-    }
+        Ok(choice) => config.insert("action_question", choice.to_string()),
+        Err(error) => match error {
+            _ => {
+                println!("Error: {}", error);
+                return;
+            }
+        },
+    };
 }
