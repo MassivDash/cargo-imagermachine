@@ -1,9 +1,9 @@
-use inquire::{Select, Text};
 use std::collections::HashMap;
 
 use crate::files::{display_table, get_files_info};
-
+use inquire::Select;
 mod files;
+mod questions;
 
 fn main() {
     println!("
@@ -20,44 +20,9 @@ Y8P                                                                         888 
                           Y88P     
 ");
 
-    let mut config = HashMap::new();
+    let mut init_questions_config: HashMap<&str, String> = questions::get_initial_config();
 
-    let input_path = Text::new("Path")
-        .with_default("./test")
-        .with_help_message("Enter directory path (type . for current)")
-        .prompt();
-
-    match input_path {
-        Ok(path) => config.insert("input_path", path),
-        Err(error) => match error {
-            _ => {
-                println!("Error: {}", error);
-                return;
-            }
-        },
-    };
-
-    let output_path = Text::new("Output Path")
-        .with_default("./output")
-        .with_help_message("Enter output directory path, default /output")
-        .prompt();
-
-    match output_path {
-        Ok(path) => config.insert("output_path", path),
-        Err(error) => match error {
-            _ => {
-                println!("Error: {}", error);
-                return;
-            }
-        },
-    };
-
-    let dir_files = get_files_info(config.get("input_path").unwrap());
-
-    for file in &dir_files {
-        println!("{:?}", file);
-    }
-
+    let dir_files = get_files_info(init_questions_config.get("input_path").unwrap());
     display_table(&dir_files);
 
     let options = vec![
@@ -70,7 +35,7 @@ Y8P                                                                         888 
     let ans = Select::new("What are we doing ?", options).prompt();
 
     match ans {
-        Ok(choice) => config.insert("action_question", choice.to_string()),
+        Ok(choice) => init_questions_config.insert("action_question", choice.to_string()),
         Err(error) => match error {
             _ => {
                 println!("Error: {}", error);
