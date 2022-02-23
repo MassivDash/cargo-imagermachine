@@ -50,7 +50,11 @@ Y8P                                                                         888 
         },
     };
 
-    files::get_files_info(config.get("input_path").unwrap());
+    let dir_files = files::get_files_info(config.get("input_path").unwrap());
+
+    for file in dir_files {
+        println!("{:?}", file);
+    }
 
     let options = vec![
         "default optimization",
