@@ -1,39 +1,44 @@
-use std::collections::HashMap;
 extern crate termion;
-use crate::files::{display_table, get_files_info};
-use inquire::Select;
+
+use std::collections::HashMap;
+
 mod errors;
+use errors::no_image_files_error;
 mod files;
+use crate::files::{display_table, get_files_info};
 mod questions;
+use questions::initial::get_initial;
+use questions::options::get_options;
 mod splash;
+use splash::{do_splash, hr, spacer, step};
 
 fn main() {
     // BIG INTRO
-    splash::do_splash();
+    do_splash();
 
-    let mut init_questions_config: HashMap<&str, String> = questions::initial::get_initial();
+    // Ask for inout and output paths
+    step("Step 1: Select files 📁");
+    let mut config: HashMap<&str, String> = get_initial();
 
-    let dir_files = get_files_info(init_questions_config.get("input_path").unwrap());
+    // Get files info based on input path
+    let dir_files = get_files_info(config.get("input_path").unwrap());
 
-    errors::no_image_files_error(&dir_files);
+    // If no image files found, exit
+    no_image_files_error(&dir_files);
+
+    // Separator for table
+    hr();
+    step("Step 2: Inspect files 🔍");
     display_table(&dir_files);
+    spacer();
+    hr();
 
-    let options = vec![
-        "default optimization",
-        "resize and optimize",
-        "custom optimization",
-        "add watermark",
-    ];
+    // Ask for output questions;
+    step("Step 3: Select options 🏷️");
 
-    let ans = Select::new("What are we doing ?", options).prompt();
+    let options = get_options();
+    config.insert("options", options.to_string());
 
-    match ans {
-        Ok(choice) => init_questions_config.insert("action_question", choice.to_string()),
-        Err(error) => match error {
-            _ => {
-                println!("Error: {}", error);
-                return;
-            }
-        },
-    };
+    println!("{}", options);
+    println!("{:?}", config);
 }

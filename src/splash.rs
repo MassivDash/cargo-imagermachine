@@ -55,7 +55,6 @@ pub fn do_splash() {
         color::Fg(color::Reset)
     );
     hr();
-    spacer();
 }
 
 pub fn hr() {
@@ -70,5 +69,10 @@ pub fn hr() {
 pub fn spacer() {
     println!("{}", color::Fg(color::Reset));
     println!("{}", color::Fg(color::Reset));
+}
+
+pub fn step(string: &str) {
+    println!("{}", color::Fg(color::LightGreen));
+    println!("{}", string);
     println!("{}", color::Fg(color::Reset));
 }

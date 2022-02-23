@@ -6,8 +6,10 @@ pub fn get_initial() -> HashMap<&'static str, String> {
 
     let input_path = Text::new("Path")
         .with_default("./test")
-        .with_help_message("Enter directory path (type . for current)")
+        .with_help_message("Enter directory name (default is current folder")
         .prompt();
+
+    println!();
 
     match input_path {
         Ok(path) => config.insert("input_path", path),
@@ -23,6 +25,8 @@ pub fn get_initial() -> HashMap<&'static str, String> {
         .with_default("./output")
         .with_help_message("Enter output directory path, default /output")
         .prompt();
+
+    println!();
 
     match output_path {
         Ok(path) => config.insert("output_path", path),
