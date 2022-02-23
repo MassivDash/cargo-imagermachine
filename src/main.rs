@@ -21,7 +21,7 @@ Y8P                                                                         888 
     let mut config = HashMap::new();
 
     let input_path = Text::new("Path")
-        .with_default(".")
+        .with_default("./test")
         .with_help_message("Enter directory path (type . for current)")
         .prompt();
 
