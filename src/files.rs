@@ -7,7 +7,6 @@ use std::{
     fs::{self},
 };
 
-//
 fn find_mimetype(filename: &String) -> Mime {
     let parts: Vec<&str> = filename.split('.').collect();
 

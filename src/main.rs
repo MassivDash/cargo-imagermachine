@@ -1,11 +1,12 @@
 extern crate termion;
 
 use std::collections::HashMap;
-
+use std::path::PathBuf;
 mod errors;
 use errors::no_image_files_error;
 mod files;
 use crate::files::{display_table, get_files_info};
+use oxipng::{optimize, InFile, Options as OxiPngOptions, OutFile};
 mod questions;
 use questions::initial::get_initial;
 use questions::options::get_options;
@@ -38,6 +39,24 @@ fn main() {
 
     let options = get_options();
     config.insert("options", options.to_string());
+
+    for (path, name, _, _, _) in dir_files {
+        println!("{}", name);
+
+        let output_path = format!("{}/{}", config.get("output_path").unwrap(), name);
+        let default_png_options = OxiPngOptions::default();
+        let path_to_file: InFile = path.to_string().into();
+        let path_to_output: OutFile = OutFile::Path(Some(PathBuf::from(&output_path)));
+        println!("Working with {}", name);
+        let file = optimize(&path_to_file, &path_to_output, &default_png_options);
+        // let file = api::OptJob::open(path);
+        match file {
+            Ok(_) => {
+                println!("Success 👁️‍🗨️ : Written to file {}", &output_path);
+            }
+            Err(error) => println!("{:#?}", error),
+        }
+    }
 
     println!("{}", options);
     println!("{:?}", config);
