@@ -11,6 +11,7 @@ mod questions;
 use questions::initial::get_initial;
 use questions::options::get_options;
 mod splash;
+use indicatif::{ProgressBar, ProgressStyle};
 use splash::{do_splash, hr, spacer, step};
 
 fn main() {
@@ -40,24 +41,35 @@ fn main() {
     let options = get_options();
     config.insert("options", options.to_string());
 
-    for (path, name, _, _, _) in dir_files {
-        println!("{}", name);
+    spacer();
+    let progress_bar = ProgressBar::new(dir_files.len() as u64);
+    progress_bar.tick();
+    for (i, (path, name, _, _, _)) in dir_files.iter().enumerate() {
+        // println!("{}", name);
 
         let output_path = format!("{}/{}", config.get("output_path").unwrap(), name);
         let default_png_options = OxiPngOptions::default();
         let path_to_file: InFile = path.to_string().into();
         let path_to_output: OutFile = OutFile::Path(Some(PathBuf::from(&output_path)));
-        println!("Working with {}", name);
+
+        // Optimize image TODO : Write codecs to optimize
         let file = optimize(&path_to_file, &path_to_output, &default_png_options);
-        // let file = api::OptJob::open(path);
+
+        // Update progress bar after each optimization
         match file {
             Ok(_) => {
-                println!("Success 👁️‍🗨️ : Written to file {}", &output_path);
+                if i == dir_files.len() - 1 {
+                    progress_bar.finish();
+                } else {
+                    progress_bar.inc(1);
+                }
             }
             Err(error) => println!("{:#?}", error),
         }
     }
+    spacer();
+    println!("Success 👁️‍🗨️");
 
-    println!("{}", options);
-    println!("{:?}", config);
+    // println!("{}", options);
+    // println!("{:?}", config);
 }
