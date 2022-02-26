@@ -7,15 +7,17 @@ mod files;
 mod optimize;
 mod questions;
 mod splash;
+mod tables;
 
 use crate::{
     errors::no_image_files_error,
-    files::{compare_file_sizes, display_table, get_files_info, output_dir_check, FileInfo},
+    files::{compare_file_sizes, get_files_info, output_dir_check, FileInfo},
     optimize::optimize_image,
     questions::compare::compare_results,
     questions::initial::get_initial,
     questions::options::get_options,
     splash::{do_splash, hr, spacer, step},
+    tables::display_files_table,
 };
 
 fn main() {
@@ -36,7 +38,7 @@ fn main() {
     // Separator for table
     hr();
     step("Step 2: Inspect files 🔍");
-    display_table(&dir_files);
+    display_files_table(&dir_files);
     spacer();
     hr();
 
@@ -98,8 +100,6 @@ fn main() {
         step("Step 5: Comparing files 🔍");
         println!();
         let files_info = get_files_info(config.get("output_path").unwrap());
-        display_table(&files_info);
-
         for output_file in files_info {
             let filter_files = &dir_files
                 .iter()
@@ -111,6 +111,8 @@ fn main() {
         }
     }
 
+    hr();
+    spacer();
     println!("Thanks for using this tool 🙏");
     // println!("{}", options);
     // println!("{:?}", config);

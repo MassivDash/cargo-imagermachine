@@ -1,6 +1,5 @@
 use image::io::Reader;
 use mime::Mime;
-use prettytable::{cell, row, Table};
 use size_format::SizeFormatterBinary;
 use std::{
     collections::HashSet,
@@ -101,31 +100,6 @@ pub fn get_files_info(input_path: &str) -> HashSet<FileInfo> {
     }
 
     return files;
-}
-
-pub fn display_table(files: &HashSet<FileInfo>) {
-    let mut table = Table::new();
-    table.add_row(row![
-        "Path",
-        "Name",
-        "Size",
-        "Size bytes",
-        "Type",
-        "Resolution"
-    ]);
-
-    for file in files {
-        table.add_row(row![
-            file.path,
-            file.name,
-            file.size_formatted,
-            file.size_bytes,
-            file.mime_type,
-            file.resolution
-        ]);
-    }
-
-    table.printstd();
 }
 
 pub fn compare_file_sizes(output_file: &FileInfo, input_file: &FileInfo) -> i128 {
