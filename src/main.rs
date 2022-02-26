@@ -10,7 +10,7 @@ mod splash;
 
 use crate::{
     errors::no_image_files_error,
-    files::{display_table, get_files_info},
+    files::{display_table, get_files_info, output_dir_check},
     optimize::optimize_image,
     questions::initial::get_initial,
     questions::options::get_options,
@@ -49,6 +49,7 @@ fn main() {
 
     step("Step 4: Optimizing files 🔨");
     println!();
+
     let progress_bar = ProgressBar::new(dir_files.len() as u64);
     progress_bar.set_style(
         ProgressStyle::with_template(
@@ -57,9 +58,18 @@ fn main() {
         .unwrap(),
     );
     progress_bar.tick();
-    for (i, (path, name, _, _, _)) in dir_files.iter().enumerate() {
+
+    // Create output directory if it doesn't exist
+    // Panic if permission denied or other error
+    output_dir_check(config.get("output_path").unwrap());
+
+    for (i, file_info) in dir_files.iter().enumerate() {
         // Optimize image TODO : Write codecs to optimize
-        let file = optimize_image(&path, &name, config.get("output_path").unwrap());
+        let file = optimize_image(
+            &file_info.path,
+            &file_info.name,
+            config.get("output_path").unwrap(),
+        );
 
         // Update progress bar after each optimization
         match file {

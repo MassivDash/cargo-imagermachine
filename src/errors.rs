@@ -1,8 +1,8 @@
-use mime::Mime;
+use crate::files::FileInfo;
 use std::collections::HashSet;
 use termion::{color, style};
 
-pub fn no_image_files_error(dir_files: &HashSet<(String, String, String, Mime, String)>) {
+pub fn no_image_files_error(dir_files: &HashSet<FileInfo>) {
     if dir_files.len() == 0 {
         big_error();
         println!("{}", color::Fg(color::Blue));
@@ -15,6 +15,19 @@ pub fn no_image_files_error(dir_files: &HashSet<(String, String, String, Mime, S
         println!("{}", color::Fg(color::Reset));
         panic!("No image files found in the directory");
     }
+}
+
+pub fn directory_error() {
+    big_error();
+    println!("{}", color::Fg(color::Blue));
+    println!(
+        "{}Error: Rust is about to go into panic!{}",
+        style::Bold,
+        color::Fg(color::Red)
+    );
+    println!("Error: Directory does not exist and cannot be created");
+    println!("{}", color::Fg(color::Reset));
+    panic!("Directory does not exist and cannot be created");
 }
 
 pub fn big_error() {
