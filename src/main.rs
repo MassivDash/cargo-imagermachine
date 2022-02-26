@@ -10,8 +10,9 @@ mod splash;
 
 use crate::{
     errors::no_image_files_error,
-    files::{display_table, get_files_info, output_dir_check},
+    files::{compare_file_sizes, display_table, get_files_info, output_dir_check, FileInfo},
     optimize::optimize_image,
+    questions::compare::compare_results,
     questions::initial::get_initial,
     questions::options::get_options,
     splash::{do_splash, hr, spacer, step},
@@ -84,8 +85,33 @@ fn main() {
         }
     }
     spacer();
-    println!("Success 👁️‍🗨️");
+    println!("Success 🚀 : All files optimized");
+    spacer();
+    hr();
+    println!();
+    step("Step 5: Compare results 📊");
+    spacer();
 
+    let start_compare = compare_results();
+
+    if start_compare {
+        step("Step 5: Comparing files 🔍");
+        println!();
+        let files_info = get_files_info(config.get("output_path").unwrap());
+        display_table(&files_info);
+
+        for output_file in files_info {
+            let filter_files = &dir_files
+                .iter()
+                .filter(|file| file.name == output_file.name)
+                .collect::<Vec<&FileInfo>>();
+
+            let diff = compare_file_sizes(&output_file, &filter_files.get(0).unwrap());
+            println!("{}", diff);
+        }
+    }
+
+    println!("Thanks for using this tool 🙏");
     // println!("{}", options);
     // println!("{:?}", config);
 }

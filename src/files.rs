@@ -119,11 +119,18 @@ pub fn display_table(files: &HashSet<FileInfo>) {
             file.path,
             file.name,
             file.size_formatted,
-            file.mime_type,
             file.size_bytes,
+            file.mime_type,
             file.resolution
         ]);
     }
 
     table.printstd();
+}
+
+pub fn compare_file_sizes(output_file: &FileInfo, input_file: &FileInfo) -> i128 {
+    let output_size = output_file.size_bytes;
+    let input_size = input_file.size_bytes;
+    let difference: i128 = i128::from(output_size) - i128::from(input_size);
+    return difference;
 }
