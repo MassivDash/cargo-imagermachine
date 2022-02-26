@@ -119,6 +119,7 @@ pub fn display_table(files: &HashSet<FileInfo>) {
             file.path,
             file.name,
             file.size_formatted,
+            file.mime_type,
             file.size_bytes,
             file.resolution
         ]);
