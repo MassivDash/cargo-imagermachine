@@ -23,5 +23,5 @@ fn main() {
     optimize_files(&dir_files, &mut config);
 
     // Step 5: Compare the files
-    compare_files(&dir_files, &mut config);
+    compare_files(dir_files, &mut config);
 }

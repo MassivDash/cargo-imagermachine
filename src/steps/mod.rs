@@ -23,6 +23,6 @@ pub fn optimize_files(dir_files: &HashSet<FileInfo>, config: &mut HashMap<&str, 
     return optimize_files::main(dir_files, config);
 }
 
-pub fn compare_files(dir_files: &HashSet<FileInfo>, config: &mut HashMap<&str, String>) -> () {
+pub fn compare_files(dir_files: HashSet<FileInfo>, config: &mut HashMap<&str, String>) -> () {
     return compare_files::main(dir_files, config);
 }
