@@ -7,7 +7,7 @@ use std::{
     path::Path,
 };
 
-use crate::errors::directory_error;
+use crate::display::errors::directory_error;
 
 fn find_mimetype(filename: &String) -> Mime {
     let parts: Vec<&str> = filename.split('.').collect();

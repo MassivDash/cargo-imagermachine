@@ -2,22 +2,19 @@ extern crate termion;
 use indicatif::{ProgressBar, ProgressStyle};
 use std::collections::HashMap;
 
-mod errors;
-mod files;
-mod optimize;
+mod display;
+mod operations;
 mod questions;
-mod splash;
-mod tables;
 
 use crate::{
-    errors::no_image_files_error,
-    files::{compare_file_sizes, get_files_info, output_dir_check, FileInfo},
-    optimize::optimize_image,
+    display::errors::no_image_files_error,
+    display::splash::{do_splash, hr, spacer, step},
+    display::tables::display_files_table,
+    operations::files::{compare_file_sizes, get_files_info, output_dir_check, FileInfo},
+    operations::optimize::optimize_image,
     questions::compare::compare_results,
     questions::initial::get_initial,
     questions::options::get_options,
-    splash::{do_splash, hr, spacer, step},
-    tables::display_files_table,
 };
 
 fn main() {

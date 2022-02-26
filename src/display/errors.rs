@@ -1,4 +1,4 @@
-use crate::files::FileInfo;
+use crate::operations::files::FileInfo;
 use std::collections::HashSet;
 use termion::{color, style};
 
