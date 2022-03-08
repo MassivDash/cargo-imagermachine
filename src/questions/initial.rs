@@ -1,3 +1,4 @@
+use crate::display::errors::generic_panic_error;
 use inquire::Text;
 use std::collections::HashMap;
 
@@ -15,8 +16,7 @@ pub fn get_initial() -> HashMap<&'static str, String> {
         Ok(path) => config.insert("input_path", path),
         Err(error) => match error {
             _ => {
-                println!("Error: {}", error);
-                return config;
+                generic_panic_error(&error.to_string());
             }
         },
     };

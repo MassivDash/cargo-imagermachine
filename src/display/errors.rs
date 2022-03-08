@@ -45,3 +45,16 @@ pub fn big_error() {
     println!();
     println!();
 }
+
+pub fn generic_panic_error(error: &str) -> ! {
+    big_error();
+    println!("{}", color::Fg(color::Blue));
+    println!(
+        "{}Error: Rust is about to go into panic!{}",
+        style::Bold,
+        color::Fg(color::Red)
+    );
+    println!("Error: {}", error);
+    println!("{}", color::Fg(color::Reset));
+    panic!("{}", error);
+}

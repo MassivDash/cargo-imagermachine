@@ -1,3 +1,4 @@
+use crate::display::errors::generic_panic_error;
 use inquire::Select;
 
 pub fn get_options() -> String {
@@ -9,10 +10,7 @@ pub fn get_options() -> String {
     return match ans {
         Ok(choice) => choice.to_string(),
         Err(error) => match error {
-            _ => {
-                println!("Error: {}", error);
-                panic!("Error: {}", error);
-            }
+            _ => generic_panic_error(&error.to_string()),
         },
     };
 }
