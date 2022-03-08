@@ -1,7 +1,7 @@
 use crate::operations::files::{compare_file_sizes, get_files_info, FileInfo};
 use std::collections::HashSet;
 
-#[derive(PartialEq, Eq, Hash)]
+#[derive(PartialEq, Eq, Hash, Debug)]
 pub struct FileReport {
     pub name: String,
     pub original_size: u64,
@@ -17,8 +17,18 @@ pub fn compare_files(files: HashSet<FileInfo>, output_dir: String) -> HashSet<Fi
     for output_file in files_info {
         let filter_files = files
             .iter()
-            .filter(|file| file.name == output_file.name)
+            .filter(|&file| {
+                println!(
+                    "{} vs {}, {}",
+                    file.name,
+                    output_file.name,
+                    file.name == output_file.name
+                );
+                return file.name == output_file.name;
+            })
             .collect::<Vec<&FileInfo>>();
+
+        println!("{:#?}", filter_files);
 
         let found_item = filter_files.get(0).unwrap();
         let original_formatted_size = found_item.size_formatted.clone().to_string();
