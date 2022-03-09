@@ -7,7 +7,12 @@ use crate::{
     questions::initial::get_initial,
 };
 
-pub fn main() -> (HashSet<FileInfo>, HashMap<&'static str, String>) {
+pub struct FileConfig {
+    pub input_path: String,
+    pub output_path: String,
+}
+
+pub fn main() -> (HashSet<FileInfo>, FileConfig) {
     // BIG INTRO
     do_splash();
 
@@ -21,5 +26,11 @@ pub fn main() -> (HashSet<FileInfo>, HashMap<&'static str, String>) {
     // if no images are found in the input folder
     no_image_files_error(&dir_files);
 
-    return (dir_files, config);
+    // Return the files and the config
+    let fileConfig = FileConfig {
+        input_path: config.get("input_path").unwrap().to_string(),
+        output_path: config.get("output_path").unwrap().to_string(),
+    };
+
+    return (dir_files, fileConfig);
 }

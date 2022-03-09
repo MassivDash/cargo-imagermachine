@@ -7,10 +7,11 @@ use crate::{
         files::{output_dir_check, FileInfo},
         optimize::optimize_image,
     },
+    Config,
 };
-use std::collections::{HashMap, HashSet};
+use std::collections::HashSet;
 
-pub fn main(dir_files: &HashSet<FileInfo>, config: &mut HashMap<&str, String>) -> () {
+pub fn main(dir_files: &HashSet<FileInfo>, config: &Config) -> () {
     step("Step 4: Optimizing files 🔨");
     println!();
 
@@ -20,15 +21,11 @@ pub fn main(dir_files: &HashSet<FileInfo>, config: &mut HashMap<&str, String>) -
     progress_bar.tick();
     // Create output directory if it doesn't exist
     // Panic if permission denied or other error
-    output_dir_check(config.get("output_path").unwrap());
+    output_dir_check(&config.output_path);
 
     for (i, file_info) in dir_files.iter().enumerate() {
         // Optimize image TODO : Write codecs to optimize
-        let file = optimize_image(
-            &file_info.path,
-            &file_info.name,
-            config.get("output_path").unwrap(),
-        );
+        let file = optimize_image(&file_info.path, &file_info.name, &config.output_path);
 
         // Update progress bar after each optimization
         match file {
