@@ -18,17 +18,9 @@ pub fn compare_files(files: HashSet<FileInfo>, output_dir: String) -> HashSet<Fi
         let filter_files = files
             .iter()
             .filter(|&file| {
-                println!(
-                    "{} vs {}, {}",
-                    file.name,
-                    output_file.name,
-                    file.name == output_file.name
-                );
                 return file.name == output_file.name;
             })
             .collect::<Vec<&FileInfo>>();
-
-        println!("{:#?}", filter_files);
 
         let found_item = filter_files.get(0).unwrap();
         let original_formatted_size = found_item.size_formatted.clone().to_string();
