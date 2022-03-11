@@ -27,10 +27,10 @@ pub fn main() -> (HashSet<FileInfo>, FileConfig) {
     no_image_files_error(&dir_files);
 
     // Return the files and the config
-    let fileConfig = FileConfig {
+    let file_config = FileConfig {
         input_path: config.get("input_path").unwrap().to_string(),
         output_path: config.get("output_path").unwrap().to_string(),
     };
 
-    return (dir_files, fileConfig);
+    return (dir_files, file_config);
 }

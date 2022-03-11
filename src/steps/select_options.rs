@@ -1,5 +1,3 @@
-use std::collections::HashMap;
-
 use crate::{
     display::splash::{spacer, step},
     questions::options::get_options,
@@ -11,7 +9,7 @@ pub enum Options {
     Custom,
 }
 
-pub fn main() -> (Options) {
+pub fn main() -> Options {
     // Ask for output questions;
     step("Step 3: Select options 🏷️");
 

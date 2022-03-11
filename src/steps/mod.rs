@@ -1,5 +1,5 @@
 use crate::operations::files::FileInfo;
-use std::collections::{HashMap, HashSet};
+use std::collections::HashSet;
 
 use self::select_files::FileConfig;
 use self::select_options::Options;
@@ -24,8 +24,8 @@ pub fn select_options() -> Options {
     return select_options::main();
 }
 
-pub fn resize_files(dir_files: &HashSet<FileInfo>) -> () {
-    return resize_files::main(dir_files);
+pub fn resize_files(dir_files: &HashSet<FileInfo>, config: &Config) -> () {
+    return resize_files::main(dir_files, config);
 }
 
 pub fn optimize_files(dir_files: &HashSet<FileInfo>, config: &Config) -> () {

@@ -11,10 +11,6 @@ use steps::{compare_files, resize_files, select_options::Options};
 pub struct Config {
     input_path: String,
     output_path: String,
-    resize: bool,
-    resize_width: u16,
-    rename: bool,
-    rename_name: String,
 }
 
 fn main() {
@@ -24,10 +20,6 @@ fn main() {
     let mut config = Config {
         input_path: String::from(""),
         output_path: String::from(""),
-        resize: false,
-        resize_width: 0,
-        rename: false,
-        rename_name: String::from(""),
     };
 
     let (dir_files, file_config) = select_files();
@@ -50,8 +42,7 @@ fn main() {
         }
         Options::Resize => {
             // Step 4: Resize the files
-            resize_files(&dir_files);
-            optimize_files(&dir_files, &config);
+            resize_files(&dir_files, &config);
         }
         Options::Custom => {
             // Custom steps
