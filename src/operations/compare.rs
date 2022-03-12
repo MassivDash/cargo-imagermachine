@@ -22,19 +22,24 @@ pub fn compare_files(files: HashSet<FileInfo>, output_dir: String) -> HashSet<Fi
             })
             .collect::<Vec<&FileInfo>>();
 
-        let found_item = filter_files[0];
-        let original_formatted_size = found_item.size_formatted.clone().to_string();
+        let found_item = filter_files.get(0);
+        match found_item {
+            Some(file) => {
+                let original_formatted_size = file.size_formatted.clone().to_string();
 
-        let diff = compare_file_sizes(&output_file, &found_item);
-        let file_report = FileReport {
-            name: output_file.name,
-            original_size: found_item.size_bytes,
-            original_formatted_size: original_formatted_size,
-            optimized_formatted_size: output_file.size_formatted,
-            resolution: output_file.resolution,
-            size_diff: diff,
-        };
-        files_report.insert(file_report);
+                let diff = compare_file_sizes(&output_file, &file);
+                let file_report = FileReport {
+                    name: output_file.name,
+                    original_size: file.size_bytes,
+                    original_formatted_size: original_formatted_size,
+                    optimized_formatted_size: output_file.size_formatted,
+                    resolution: output_file.resolution,
+                    size_diff: diff,
+                };
+                files_report.insert(file_report);
+            }
+            None => {}
+        }
     }
 
     return files_report;
