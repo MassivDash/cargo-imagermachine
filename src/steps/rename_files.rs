@@ -3,7 +3,10 @@ use crate::{
         progress::progress_bar,
         splash::{hr, spacer, step},
     },
-    operations::{files::get_files_info, rename::rename_file},
+    operations::{
+        files::{get_files_info, FileInfo},
+        rename::rename_file,
+    },
     questions::{new_name::get_new_name, rename::rename_files},
     Config,
 };
@@ -36,7 +39,11 @@ pub fn main(config: &Config) -> () {
         let progress_bar = progress_bar(&dir_files);
         progress_bar.tick();
 
-        for (i, file) in dir_files.iter().enumerate() {
+        let mut vec_files = dir_files.iter().collect::<Vec<&FileInfo>>();
+
+        vec_files.sort();
+
+        for (i, file) in vec_files.iter().enumerate() {
             let rfile = rename_file(
                 file.path.to_string(),
                 format!(

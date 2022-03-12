@@ -48,7 +48,7 @@ fn file_resolution(path: &String) -> Result<String, std::io::Error> {
 }
 
 // Tell compiler to derive those instances for us
-#[derive(PartialEq, Eq, Hash, Debug)]
+#[derive(PartialEq, Eq, Hash, Debug, PartialOrd, Ord)]
 pub struct FileInfo {
     pub path: String,
     pub name: String,
