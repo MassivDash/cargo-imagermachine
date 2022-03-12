@@ -22,7 +22,7 @@ pub fn compare_files(files: HashSet<FileInfo>, output_dir: String) -> HashSet<Fi
             })
             .collect::<Vec<&FileInfo>>();
 
-        let found_item = filter_files.get(0).unwrap();
+        let found_item = filter_files[0];
         let original_formatted_size = found_item.size_formatted.clone().to_string();
 
         let diff = compare_file_sizes(&output_file, &found_item);

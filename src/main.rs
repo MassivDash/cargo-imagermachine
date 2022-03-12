@@ -4,6 +4,7 @@ mod display;
 mod operations;
 mod questions;
 mod steps;
+mod tests;
 
 use crate::steps::{inspect_files, optimize_files, select_files, select_options};
 use steps::{compare_files, resize_files, select_options::Options};
