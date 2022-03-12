@@ -1,4 +1,5 @@
 use crate::operations::files::FileInfo;
+use oxipng::PngError;
 use std::collections::HashSet;
 use termion::{color, style};
 
@@ -54,7 +55,15 @@ pub fn generic_panic_error(error: &str) -> ! {
         style::Bold,
         color::Fg(color::Red)
     );
-    println!("Error: {}", error);
+    println!("Error: {:#?}", error);
     println!("{}", color::Fg(color::Reset));
-    panic!("{}", error);
+    panic!("{:#?}", error);
+}
+
+pub fn optimize_error(error: PngError) {
+    big_error();
+    println!("{}", color::Fg(color::Blue));
+    println!("{}Error!{}", style::Bold, color::Fg(color::Red));
+    println!("Error: {:#?}", error);
+    println!("{}", color::Fg(color::Reset));
 }
