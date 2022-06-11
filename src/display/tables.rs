@@ -20,7 +20,7 @@ pub fn display_files_table(files: &HashSet<FileInfo>) {
             Cell::new(&file.name).style_spec("Fmb"),
             Cell::new(&file.size_formatted).style_spec("Fmb"),
             Cell::new(&file.size_bytes.to_string()),
-            Cell::new(&file.mime_type),
+            Cell::new(&file.mime_type.to_string()),
             Cell::new(&file.resolution),
         ]));
     }

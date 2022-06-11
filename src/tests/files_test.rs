@@ -25,7 +25,7 @@ fn check_file_info() {
         name: "test2.png".to_string(),
         size_formatted: "124.2KiB".to_string(),
         size_bytes: 127264,
-        mime_type: "image/png".to_string(),
+        mime_type: mime::IMAGE_PNG,
         resolution: "986px x 768px".to_string(),
     };
 

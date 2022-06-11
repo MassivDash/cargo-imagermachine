@@ -2,13 +2,12 @@ use std::collections::HashSet;
 
 use crate::{
     display::{
-        errors::optimize_error,
         progress::progress_bar,
         splash::{hr, spacer, step},
     },
     operations::{
         files::{output_dir_check, FileInfo},
-        optimize::optimize_image,
+        optimize::execute_optimization,
         resize::resize_image,
     },
     questions::resize::get_resize_options,
@@ -36,18 +35,17 @@ pub fn main(dir_files: &HashSet<FileInfo>, config: &Config) -> () {
 
         // Optimize / overwrite image directly in the output folder
         // So we leave the originals alone
-        let file = optimize_image(&buffer_path, &file.name, &config.output_path);
-
-        match file {
-            Ok(_) => {
-                // Update progress bar after each optimization
+        let output_file = execute_optimization(&buffer_path, &file.name, file.mime_type.clone(), &config.output_path);
+        // Update progress bar after each optimization
+        match output_file {
+            true => {
                 if i == dir_files.len() - 1 {
                     progress_bar.finish();
                 } else {
                     progress_bar.inc(1);
                 }
             }
-            Err(error) => optimize_error(error),
+            false => panic!("Error optimizing file"),
         }
     }
 

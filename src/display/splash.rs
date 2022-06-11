@@ -48,7 +48,7 @@ pub fn do_splash() {
     );
     spacer();
     println!(
-        "{} cargo imager machine: version 0.1.0 author: @spaceout.pl",
+        "{} cargo imager machine: version 0.1.2 author: @spaceout.pl",
         color::Fg(color::Reset)
     );
     hr();
