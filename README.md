@@ -45,23 +45,34 @@ Offical webiste and documentation 👉 https://www.libjpeg-turbo.org/
 sudo apt-get install libturbojpeg libturbojpeg0-dev
 ```
 
-*iOS* 
+This should be enough to get started on Ubuntu
+
+*Mac* 
 
 ```bash
 brew install jpeg-turbo
 ```
 
-If you have troubles linking the cli to your libturbo, you can try to edit the cargo.toml file and add feature flags into turbojpeg features array, for more reference follow this [link](https://github.com/honzasp/rust-turbojpeg#requirements) 
+! Remember to copy all the export paths that brew will print out after installation, I am using the following config in the cargo.toml file, pkg-config (also via brew) installation is needed for this setup to work. 
+
+```yml
+turbojpeg = {version = "0.4", features = ["image", "pkg-config"]}
+```
+
+
+If you have troubles linking the cli to your libturbo, you can try to edit the cargo.toml file and add feature flags into turbojpeg features array, for more reference follow this [link](https://github.com/honzasp/rust-turbojpeg#requirements). 
+
+ 
 
 ---
 
 
 
 ### Install
-In order to install cargo-imagermachine on your computer, clone the project then run. 
+In order to install cargo-imagermachine on your computer, clone the project then run the following command from the project folder: 
 
 ```sh
-cargo install 
+cargo install --path . 
 ```
 
 ### Usage
