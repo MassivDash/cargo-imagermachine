@@ -1,6 +1,6 @@
 <h1 align="center">Welcome to Cargo Imagermachine 👋</h1>
 <p>
-  <img alt="Version" src="https://img.shields.io/badge/version-0.1.0-blue.svg?cacheSeconds=2592000" />
+  <img alt="Version" src="https://img.shields.io/badge/version-0.2.0-blue.svg?cacheSeconds=2592000" />
   <a href="https://github.com/MassivDash/cargo-imagermachine" target="_blank">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
   </a>
@@ -12,23 +12,71 @@
   </a>
 </p>
 
-> Rust cli for batch optimising images for web
+## Rust cli for batch optimizing images
 
-### 🏠 [Homepage](https://spaceout.pl)
+Cargo-imagermachine was designed as a subtool of cargo package manger, so user can run the interactive cli from the command line inside folders that contain pictures. 
 
-## Install
+Imagermachine uses turbo-jpeg library for jpeg files optimization and oxi png for png images. You must install the turbo-jpeg yourself as the cli uses only the bindings to the turbo-jpeg library. Installation guide for respective systems below. 
+
+Imagermachine can: 
+- Optimize png and jpg images. 
+- Resize and crop images. 
+- Rename the transformed files based on provided_name_(index).ext
+- todo: conversion to Webp
+- todo: set optimalisation custom config 
+
+---
+
+### Dependencies  
+So far the cli has been tested on unix systems (Debian, Mac).  
+Before using cargo-imagermachine you must install 
+
+#### Rust
+Follow the official guideline for installing rust on your system
+https://www.rust-lang.org/tools/install
+
+#### Libturbojpeg
+
+Offical webiste and documentation 👉 https://www.libjpeg-turbo.org/
+
+*Debian* 
+
+```bash 
+sudo apt-get install libturbojpeg libturbojpeg0-dev
+```
+
+*iOS* 
+
+```bash
+brew install jpeg-turbo
+```
+
+If you have troubles linking the cli to your libturbo, you can try to edit the cargo.toml file and add feature flags into turbojpeg features array, for more reference follow this [link](https://github.com/honzasp/rust-turbojpeg#requirements) 
+
+---
+
+
+
+### Install
+In order to install cargo-imagermachine on your computer, clone the project then run. 
 
 ```sh
 cargo install 
 ```
 
-## Usage
+### Usage
+
+
+If you followed the offical rust documentation and cargo / rustc is in scope, navigate to a input folder and run 
 
 ```sh
-imagermachine
+cargo imagermachine
 ```
 
-## Author
+Follow directions on the interactive cli to optimize, resize, rename the images. 
+
+
+### Author
 
 👤 **Lukasz Celitan**
 
@@ -41,5 +89,3 @@ imagermachine
 
 Give a ⭐️ if this project helped you!
 
-***
-_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
