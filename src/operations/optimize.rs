@@ -1,7 +1,8 @@
 use mime::Mime;
 use oxipng::{optimize, InFile, Options as OxiPngOptions, OutFile, PngError};
-use std::{path::PathBuf};
+use std::path::PathBuf;
 
+use crate::display::errors::optimize_error;
 
 pub fn optimize_png_image(path: &String, name: &String, output_dir: &String) -> bool {
     let output_path = format!("{}/{}", output_dir, name);
@@ -14,7 +15,10 @@ pub fn optimize_png_image(path: &String, name: &String, output_dir: &String) -> 
 
     match file {
         Ok(_) => return true,
-        Err(error) => panic!("{:#?}", error),
+        Err(error) => {
+            optimize_error(error.to_string());
+            panic!("{:#?}", error)
+        }
     }
 }
 
@@ -28,21 +32,28 @@ pub fn optimize_jpeg_image(path: &String, name: &String, output_dir: &String) ->
 
     // compress `image` into JPEG with quality 95 and 2x2 chrominance subsampling
     let jpeg_data = turbojpeg::compress_image(&image, 95, turbojpeg::Subsamp::Sub2x2).unwrap();
-
+    println!("{}", "Using turbojpeg");
     let file = std::fs::write(output_path, jpeg_data);
     match file {
         Ok(_) => return true,
-        Err(error) => panic!("{:#?}", error)
+        Err(error) => {
+            optimize_error(error.to_string());
+            panic!("{:#?}", error)
+        }
     }
-        
 }
 
-pub fn execute_optimization(file_path: &String, file_name: &String, mime_type: Mime, output_dir: &String) -> bool {
+pub fn execute_optimization(
+    file_path: &String,
+    file_name: &String,
+    mime_type: Mime,
+    output_dir: &String,
+) -> bool {
     let file;
     if mime_type == mime::IMAGE_JPEG {
-    file = optimize_jpeg_image(&file_path, &file_name, &output_dir);
+        file = optimize_jpeg_image(&file_path, &file_name, &output_dir);
     } else {
-    file = optimize_png_image(&file_path, &file_name, &output_dir);
+        file = optimize_png_image(&file_path, &file_name, &output_dir);
     }
     return file;
 }
