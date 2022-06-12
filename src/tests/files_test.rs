@@ -1,5 +1,6 @@
 #[cfg(test)]
 use crate::operations::files::{compare_file_sizes, get_files_info, output_dir_check, FileInfo};
+#[cfg(test)]
 use crate::operations::optimize::{optimize_jpeg_image, optimize_png_image};
 
 #[test]
@@ -14,7 +15,6 @@ fn check_file_collection() {
 fn check_file_info() {
     let input_path = "./test/";
     let files = get_files_info(input_path);
-
     let file = files
         .iter()
         .filter(|x| x.path == "./test/test2.png")
