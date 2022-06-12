@@ -16,6 +16,7 @@ fn find_mimetype(filename: &String) -> Mime {
         Some(v) => match *v {
             "png" => mime::IMAGE_PNG,
             "jpg" => mime::IMAGE_JPEG,
+            "jpeg" => mime::IMAGE_JPEG,
             "json" => mime::APPLICATION_JSON,
             &_ => mime::TEXT_PLAIN,
         },
@@ -54,7 +55,7 @@ pub struct FileInfo {
     pub name: String,
     pub size_formatted: String,
     pub size_bytes: u64,
-    pub mime_type: String,
+    pub mime_type: Mime,
     pub resolution: String,
 }
 
@@ -92,7 +93,7 @@ pub fn get_files_info(input_path: &str) -> HashSet<FileInfo> {
             name: file_name,
             size_formatted: file_size_formatted,
             size_bytes: file_size,
-            mime_type: file_type.to_string(),
+            mime_type: file_type,
             resolution: file_resolution,
         };
 

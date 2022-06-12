@@ -20,7 +20,7 @@
     },
     "peacock.color": "#ff3d00",
     "[rust]": {
-        "editor.defaultFormatter": "matklad.rust-analyzer", // Makes the magic
+        "editor.defaultFormatter": "rust-lang.rust-analyzer", // Makes the magic
         "editor.formatOnSave": true // Optional
     },
     "cSpell.words": [

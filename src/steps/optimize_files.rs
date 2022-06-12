@@ -5,7 +5,7 @@ use crate::{
     },
     operations::{
         files::{output_dir_check, FileInfo},
-        optimize::optimize_image,
+        optimize::{execute_optimization},
     },
     Config,
 };
@@ -25,18 +25,18 @@ pub fn main(dir_files: &HashSet<FileInfo>, config: &Config) -> () {
 
     for (i, file_info) in dir_files.iter().enumerate() {
         // Optimize image TODO : Write codecs to optimize
-        let file = optimize_image(&file_info.path, &file_info.name, &config.output_path);
 
+        let file = execute_optimization(&file_info.path, &file_info.name, file_info.mime_type.clone(), &config.output_path);
         // Update progress bar after each optimization
         match file {
-            Ok(_) => {
+            true => {
                 if i == dir_files.len() - 1 {
                     progress_bar.finish();
                 } else {
                     progress_bar.inc(1);
                 }
             }
-            Err(error) => println!("{:#?}", error),
+            false => panic!("Error optimizing file"),
         }
     }
     spacer();

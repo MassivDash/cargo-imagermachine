@@ -6,7 +6,7 @@ pub fn get_initial() -> HashMap<&'static str, String> {
     let mut config = HashMap::new();
 
     let input_path = Text::new("Path")
-        .with_default("./test")
+        .with_default(".")
         .with_help_message("Enter directory name (default is current folder")
         .prompt();
 
