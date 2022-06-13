@@ -13,6 +13,7 @@ use crate::{
 
 pub fn main(config: &Config) -> () {
     step("Step 8: convert files to webp");
+    println!();
     spacer();
 
     let convert = convert_files_to_webp();
