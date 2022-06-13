@@ -1,5 +1,25 @@
 use image::{imageops::FilterType, open, ImageError};
 
+/// Resize an image to a given width.
+///
+/// # Arguments
+/// * `path` - The path to the image
+/// * `buffer_path` - The path to the output image
+/// * `nwidth` - The width to resize the image to
+///
+/// # Returns
+/// * `void` - No return value
+///
+/// # Example
+/// ```
+/// resize_image(&path, &buffer_path, nwidth);
+/// ```
+/// # Errors
+/// * `std::io::Error` - If the image does not exist
+/// * `image::ImageError` - Image error on save
+///
+/// # Panics
+/// * `std::io::Error` - If the image does not exist
 pub fn resize_image(path: &String, buffer_path: &String, nwidth: &u32) -> Result<(), ImageError> {
     let new_file = open(path).unwrap();
     let width = new_file.width();

@@ -59,6 +59,23 @@ pub struct FileInfo {
     pub resolution: String,
 }
 
+/// This function will return a list of files in a directory
+///
+/// # Arguments
+/// * `path` - The path to the directory
+///
+/// # Returns
+/// * `Vec<FileInfo>` - A list of files in the directory
+/// # Example
+/// ```
+/// let files = get_files_info(&path);
+/// ```
+/// # Errors
+/// * `std::io::Error` - If the directory does not exist
+///
+/// # Panics
+/// * `std::io::Error` - If the directory does not exist
+///
 pub fn get_files_info(input_path: &str) -> HashSet<FileInfo> {
     let paths = fs::read_dir(input_path).unwrap().filter(|entry| {
         if entry.as_ref().unwrap().path().is_dir() {
@@ -102,6 +119,17 @@ pub fn get_files_info(input_path: &str) -> HashSet<FileInfo> {
 
     return files;
 }
+
+/// This function compares 2 FileInfo structs and returns a difference in size (i128)
+/// # Arguments
+/// * `file1` - The first file to compare
+/// * `file2` - The second file to compare
+/// # Returns
+/// * `i128` - The difference in size between the two files
+/// # Example
+/// ```
+/// let difference = compare_files_size(&file1, &file2);
+/// ```
 
 pub fn compare_file_sizes(output_file: &FileInfo, input_file: &FileInfo) -> i128 {
     let output_size = output_file.size_bytes;

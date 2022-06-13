@@ -1,13 +1,13 @@
 #[cfg(test)]
 use crate::operations::files::{get_files_info, output_dir_check, FileInfo};
+#[cfg(test)]
 use crate::operations::resize::resize_image;
 
 #[test]
 fn check_ratio() {
-    let width = 1600;
-    let height = 500;
-
-    let nwidth = 500;
+    let width: u32 = 1600;
+    let height: u32 = 500;
+    let nwidth: u32 = 500;
 
     fn ratio(width: u32, height: u32) -> f32 {
         let ratio = height as f32 / width as f32;
@@ -17,10 +17,8 @@ fn check_ratio() {
     fn resize(nwidth: u32, width: u32, height: u32) -> u32 {
         return height * nwidth / width;
     }
-
     let before_ration = ratio(width, height);
     let after_ration = ratio(nwidth, resize(nwidth, width, height));
-
     assert_eq!(before_ration, after_ration);
 }
 
