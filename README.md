@@ -22,7 +22,7 @@ Imagermachine can:
 - Optimize png and jpg images. 
 - Resize and crop images. 
 - Rename the transformed files based on provided_name_(index).ext
-- todo: conversion to Webp
+- Convert files to Webp
 - todo: set optimalisation custom config 
 
 ---

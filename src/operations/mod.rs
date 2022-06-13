@@ -3,3 +3,4 @@ pub mod files;
 pub mod optimize;
 pub mod rename;
 pub mod resize;
+pub mod webp;

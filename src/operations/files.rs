@@ -18,6 +18,7 @@ fn find_mimetype(filename: &String) -> Mime {
             "jpg" => mime::IMAGE_JPEG,
             "jpeg" => mime::IMAGE_JPEG,
             "json" => mime::APPLICATION_JSON,
+            "webp" => mime::IMAGE_STAR,
             &_ => mime::TEXT_PLAIN,
         },
         None => mime::TEXT_PLAIN,
@@ -44,8 +45,10 @@ fn file_size(path: &String) -> Result<u64, std::io::Error> {
 
 fn file_resolution(path: &String) -> Result<String, std::io::Error> {
     let image = Reader::open(path)?.into_dimensions();
-    let (width, height) = image.ok().unwrap();
-    Ok(format!("{}px x {}px", width, height))
+    match image {
+        Ok((width, height)) => Ok(format!("{}px x {}px", width, height)),
+        Err(_) => Ok("Err".to_string()),
+    }
 }
 
 // Tell compiler to derive those instances for us
@@ -87,7 +90,10 @@ pub fn get_files_info(input_path: &str) -> HashSet<FileInfo> {
             let path = entry.as_ref().unwrap().path();
             let filename = path.file_name().unwrap().to_str().unwrap();
             let is_file = path.is_file();
-            let is_image = filename.ends_with(".png") || filename.ends_with(".jpg");
+            let is_image = filename.ends_with(".png")
+                || filename.ends_with(".jpg")
+                || filename.ends_with(".jpeg")
+                || filename.ends_with(".webp");
             return is_image && is_file;
         } else {
             return false;

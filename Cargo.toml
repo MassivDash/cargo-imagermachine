@@ -16,3 +16,4 @@ termion = "*"
 oxipng = "5.0.1" 
 turbojpeg = {version = "0.4", features = ["image"]}
 indicatif = "0.17.0-rc.5"
+webp = "0.2" 

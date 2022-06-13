@@ -77,6 +77,4 @@ pub fn main(config: &Config) -> () {
 
     hr();
     spacer();
-    println!("Thanks for using this tool 🙏");
-    spacer();
 }

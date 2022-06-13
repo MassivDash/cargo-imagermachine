@@ -7,7 +7,7 @@ mod steps;
 mod tests;
 
 use crate::steps::{inspect_files, optimize_files, rename_files, select_files, select_options};
-use steps::{compare_files, resize_files, select_options::Options};
+use steps::{compare_files, resize_files, select_options::Options, webp_files};
 
 pub struct Config {
     input_path: String,
@@ -54,4 +54,5 @@ fn main() {
     // Step 5: Compare the files
     compare_files(dir_files, &config);
     rename_files(&config);
+    webp_files(&config);
 }

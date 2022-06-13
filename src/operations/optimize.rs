@@ -32,7 +32,6 @@ pub fn optimize_jpeg_image(path: &String, name: &String, output_dir: &String) ->
 
     // compress `image` into JPEG with quality 95 and 2x2 chrominance subsampling
     let jpeg_data = turbojpeg::compress_image(&image, 95, turbojpeg::Subsamp::Sub2x2).unwrap();
-    println!("{}", "Using turbojpeg");
     let file = std::fs::write(output_path, jpeg_data);
     match file {
         Ok(_) => return true,
@@ -49,10 +48,12 @@ pub fn execute_optimization(
     mime_type: Mime,
     output_dir: &String,
 ) -> bool {
-    let file;
+    let mut file: bool = false;
+
     if mime_type == mime::IMAGE_JPEG {
         file = optimize_jpeg_image(&file_path, &file_name, &output_dir);
-    } else {
+    }
+    if mime_type == mime::IMAGE_PNG {
         file = optimize_png_image(&file_path, &file_name, &output_dir);
     }
     return file;

@@ -8,7 +8,7 @@ fn check_file_collection() {
     let input_path = "./test/";
     let files = get_files_info(input_path);
 
-    assert_eq!(files.len(), 3);
+    assert_eq!(files.len(), 4);
 }
 
 #[test]
