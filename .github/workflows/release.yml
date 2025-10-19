@@ -1,0 +1,53 @@
+name: "Release Application"
+
+on:
+  push:
+    tags:
+      - "v*.*.*" # Triggers the workflow on version tags
+  workflow_dispatch: # Allows the workflow to be run on demand
+
+permissions:
+  contents: write # Grants write permissions
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install turbojpeg
+        run: sudo apt-get install libturbojpeg libturbojpeg0-dev cmake nasm
+      - name: Build
+        run: cargo build --verbose
+      - name: Run tests
+        run: cargo test --verbose
+      - name: Create Release Build
+        run: cargo build --release --verbose
+
+      - name: Upload app artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ github.event.repository.name }}-release-artifacts
+          path: target/release/${{ github.event.repository.name }}*
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Assets
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./target/release/${{ github.event.repository.name }}
+          asset_name: ${{ github.event.repository.name }}-release
+          asset_content_type: application/octet-stream
