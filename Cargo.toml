@@ -11,6 +11,7 @@ categories = ["command-line-utilities", "image-processing"]
 authors = ["MassivDash <https://github.com/MassivDash>"]
 readme = "README.md"
 license-file = "LICENSE"
+exclude = ["output/*", "test/*"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
