@@ -2,7 +2,15 @@
 name = "cargo-imagermachine"
 version = "0.3.0"
 edition = "2021"
-
+description = "A CLI tool for image optimization and conversion"
+documentation = "https://github.com/MassivDash/cargo-imagermachine"
+keywords = ["image", "optimization", "conversion", "cli"]
+homepage = "spaceout.pl"
+repository = "https://github.com/MassivDash/cargo-imagermachine"
+categories = ["command-line-utilities", "image-processing"]
+authors = ["MassivDash <https://github.com/MassivDash>"]
+readme = "README.md"
+license-file = "LICENSE"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
