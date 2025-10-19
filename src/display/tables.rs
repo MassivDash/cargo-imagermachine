@@ -1,5 +1,5 @@
 use crate::operations::{compare::FileReport, files::FileInfo};
-use prettytable::{cell, row, Cell, Row, Table};
+use prettytable::{row, Cell, Row, Table};
 use size_format::SizeFormatterBinary;
 use std::collections::HashSet;
 

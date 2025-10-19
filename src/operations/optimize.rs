@@ -8,13 +8,17 @@ pub fn optimize_png_image(path: &String, name: &String, output_dir: &String) -> 
     let output_path = format!("{}/{}", output_dir, name);
     let default_png_options = OxiPngOptions::default();
     let path_to_file: InFile = path.to_string().into();
-    let path_to_output: OutFile = OutFile::Path(Some(PathBuf::from(&output_path)));
+
+    let path_to_output: OutFile = OutFile::Path {
+        path: Some(PathBuf::from(output_path)),
+        preserve_attrs: true,
+    };
 
     // Optimize image TODO : Write codecs to optimize
     let file: Result<(), PngError> = optimize(&path_to_file, &path_to_output, &default_png_options);
 
     match file {
-        Ok(_) => return true,
+        Ok(_) =>  true,
         Err(error) => {
             optimize_error(error.to_string());
             panic!("{:#?}", error)
@@ -34,7 +38,7 @@ pub fn optimize_jpeg_image(path: &String, name: &String, output_dir: &String) ->
     let jpeg_data = turbojpeg::compress_image(&image, 95, turbojpeg::Subsamp::Sub2x2).unwrap();
     let file = std::fs::write(output_path, jpeg_data);
     match file {
-        Ok(_) => return true,
+        Ok(_) => true,
         Err(error) => {
             optimize_error(error.to_string());
             panic!("{:#?}", error)
@@ -56,5 +60,5 @@ pub fn execute_optimization(
     if mime_type == mime::IMAGE_PNG {
         file = optimize_png_image(&file_path, &file_name, &output_dir);
     }
-    return file;
+    file
 }

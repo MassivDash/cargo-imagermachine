@@ -1,4 +1,4 @@
-use image::io::Reader;
+use image::ImageReader;
 use mime::Mime;
 use size_format::SizeFormatterBinary;
 use std::{
@@ -44,7 +44,7 @@ fn file_size(path: &String) -> Result<u64, std::io::Error> {
 }
 
 fn file_resolution(path: &String) -> Result<String, std::io::Error> {
-    let image = Reader::open(path)?.into_dimensions();
+    let image = ImageReader::open(path)?.into_dimensions();
     match image {
         Ok((width, height)) => Ok(format!("{}px x {}px", width, height)),
         Err(_) => Ok("Err".to_string()),
